@@ -1,4 +1,4 @@
-import { useSession } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
 import Head from 'next/head';
 import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
 import { db } from '@/lib/firestore';
@@ -25,6 +25,8 @@ export default function Home({ data }: { data: Users[] }) {
 			<main>
 				<Image width={50} height={50} alt='' src={data[0].image} />
 				{session?.user.name}
+
+				<button onClick={() => signOut()}>log out</button>
 			</main>
 		</>
 	);

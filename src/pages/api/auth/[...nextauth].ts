@@ -1,7 +1,7 @@
 import NextAuth from 'next-auth';
 import { FirestoreAdapter } from '@next-auth/firebase-adapter';
 import { NextAuthOptions } from 'next-auth';
-import { firestore } from '@/config/firestore';
+import { firestore } from '@/config/firebase';
 import GoogleProvider from 'next-auth/providers/google';
 
 export const authOptions: NextAuthOptions = {
@@ -9,6 +9,17 @@ export const authOptions: NextAuthOptions = {
 		strategy: 'jwt',
 	},
 	useSecureCookies: process.env.NODE_ENV === 'production',
+	logger: {
+		error(code, metadata) {
+			console.log({
+				code,
+				metadata,
+			});
+		},
+		warn(code) {
+			console.log(code);
+		},
+	},
 	callbacks: {
 		session({ session, token }) {
 			session.user.uid = token.sub as string;
