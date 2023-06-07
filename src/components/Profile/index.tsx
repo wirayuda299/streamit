@@ -2,6 +2,7 @@ import type { FC } from 'react';
 import UserImage from './UserImage';
 import CreateButton from './CreateButton';
 import Notification from './Notification';
+import { signOut } from 'next-auth/react';
 type ProfileProps = {};
 
 const Profile: FC<ProfileProps> = (props) => {
@@ -10,6 +11,7 @@ const Profile: FC<ProfileProps> = (props) => {
 			<CreateButton />
 			<Notification />
 			<UserImage />
+			<button onClick={() => signOut()}>Log Out</button>
 		</div>
 	);
 };
