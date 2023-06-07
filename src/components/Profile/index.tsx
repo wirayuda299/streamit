@@ -11,7 +11,16 @@ const Profile: FC<ProfileProps> = (props) => {
 			<CreateButton />
 			<Notification />
 			<UserImage />
-			<button onClick={() => signOut()}>Log Out</button>
+			<button
+				onClick={() =>
+					signOut({
+						callbackUrl: '/auth/signin',
+						redirect: true,
+					})
+				}
+			>
+				Log Out
+			</button>
 		</div>
 	);
 };
