@@ -1,5 +1,6 @@
-import { initFirestore } from '@next-auth/firebase-adapter';
-import { cert } from 'firebase-admin/app';
+import { initializeApp } from 'firebase/app';
+import { getFirestore } from 'firebase/firestore';
+import { getStorage } from 'firebase/storage';
 export const firebaseConfig = {
 	apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
 	authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
@@ -9,10 +10,6 @@ export const firebaseConfig = {
 	appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 };
 
-export const firestore = initFirestore({
-	credential: cert({
-		projectId: process.env.FIREBASE_PROJECT_ID,
-		clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-		privateKey: process.env.FIREBASE_PRIVATE_KEY,
-	}),
-});
+const app = initializeApp(firebaseConfig);
+export const db = getFirestore(app);
+export const storages = getStorage(app);
