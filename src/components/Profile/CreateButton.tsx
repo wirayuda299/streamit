@@ -6,8 +6,14 @@ const CreateButton = () => {
 	const [modalOpen, setModalOpen] = useRecoilState(createVideoModalState);
 	return (
 		<div>
-			<button onClick={() => setModalOpen(!modalOpen)}>
-				<BiVideoPlus size={30} />
+			<button
+				type='button'
+				name='open'
+				title='open'
+				className='hidden md:block'
+				onClick={() => setModalOpen(!modalOpen)}
+			>
+				<BiVideoPlus className='text-xl md:text-3xl' />
 			</button>
 		</div>
 	);

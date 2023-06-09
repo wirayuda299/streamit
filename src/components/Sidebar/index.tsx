@@ -39,7 +39,9 @@ const Sidebar = () => {
 		},
 	];
 	return (
-		<aside className={'w-[250px] h-screen p-5 '}>
+		<aside
+			className={'w-[250px] h-screen p-5 fixed top-0 -left-full md:static'}
+		>
 			<header className={'hidden md:flex h-20'}>
 				<Logo />
 			</header>
@@ -47,9 +49,9 @@ const Sidebar = () => {
 				<ul className={'flex flex-col justify-center gap-10 '}>
 					{navlists.map((list) => (
 						<li key={list.id}>
-							<Link href={list.path} className={'flex items-center space-x-9'}>
+							<Link href={list.path} className={'flex items-center space-x-5'}>
 								{list.icon}
-								<span>{list.name}</span>
+								<span className='font-light text-sm'>{list.name}</span>
 							</Link>
 							{list.id === 2 && <hr className={'pt-3 mt-5'} />}
 						</li>

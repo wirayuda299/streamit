@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-export async function middleware(req: NextRequest) {
+export async function middleware(req: NextRequest, res: NextRequest) {
 	const isProduction = process.env.NODE_ENV === 'production';
 	const cookieProd = req.cookies.get('__Secure-next-auth.session-token');
 	const cookie = req.cookies.get('next-auth.session-token');

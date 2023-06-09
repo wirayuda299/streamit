@@ -1,37 +1,22 @@
-import Head from 'next/head';
-import VideoCard from '@/components/Video/Card';
-import { GetServerSidePropsResult } from 'next';
-import { collection, getDocs } from 'firebase/firestore';
-import { db } from '@/config/firebase';
+import { getVidoes } from '@/helper/getVideos';
+import dynamic from 'next/dynamic';
+const VideoCard = dynamic(() => import('@/components/Video/Card'), {
+	ssr: true,
+});
 
-type Videos = {
-	video: string;
-	authorId: string;
-	authorName: string;
-	title: string;
-	thumbnail: string;
-	authorImage: string;
-};
 export default function Home({ data }: { data: Videos[] }) {
 	return (
-		<>
-			<Head>
-				<title>StreamIt</title>
-				<meta
-					name='description'
-					content='Video stream website inspired by Youtube web app'
-				/>
-				<meta name='viewport' content='width=device-width, initial-scale=1' />
-				<link rel='icon' href='/favicon.ico' />
-			</Head>
-			<div className={'w-full h-full'}>
+		<section className='w-full h-screen overflow-y-auto '>
+			<div className={'w-full p-5 h-[calc(100vh + 10rem)]'}>
 				<div
 					className={
-						'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3  w-full gap-5'
+						'grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3 items-center justify-center   sm:h-fit mb-5 w-full gap-5'
 					}
 				>
 					{data.map((video) => (
 						<VideoCard
+							createdAt={video.createdAt}
+							videoId={video.videoId}
 							authorImage={video.authorImage}
 							title={video.title}
 							thumbnail={video.thumbnail}
@@ -41,19 +26,16 @@ export default function Home({ data }: { data: Videos[] }) {
 					))}
 				</div>
 			</div>
-		</>
+		</section>
 	);
 }
 
-type Result = GetServerSidePropsResult<{ data: Videos[] }>;
-
-export async function getServerSideProps(): Promise<Result> {
-	const coll = await getDocs(collection(db, 'posts'));
-	const videos = coll.docs.map((videos) => videos.data()) as Videos[];
+export async function getServerSideProps() {
+	const videos = await getVidoes();
 
 	return {
 		props: {
-			data: videos,
+			data: videos ?? [],
 		},
 	};
 }

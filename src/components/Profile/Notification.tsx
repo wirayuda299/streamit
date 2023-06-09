@@ -1,13 +1,15 @@
-import type { FC } from 'react';
 import { AiOutlineBell } from 'react-icons/ai';
 
-type NotificationProps = {};
-
-const Notification: FC<NotificationProps> = (props) => {
+const Notification = () => {
 	return (
 		<div>
-			<button>
-				<AiOutlineBell size={30} />
+			<button
+				className='hidden md:block'
+				type='button'
+				name='notifications'
+				title='notifications'
+			>
+				<AiOutlineBell className='text-xl md:text-3xl' />
 			</button>
 		</div>
 	);

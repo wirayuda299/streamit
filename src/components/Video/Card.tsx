@@ -1,22 +1,30 @@
+import { getCreatedDate } from '@/utils/postDate';
 import Image from 'next/image';
+import Link from 'next/link';
 import { FC } from 'react';
 import { GoVerified } from 'react-icons/go';
+
 type VideoCardProps = {
 	authorName: string;
 	title: string;
 	thumbnail: string;
 	authorImage: string;
+	videoId: string;
+	createdAt: number;
 };
+
 const VideoCard: FC<VideoCardProps> = ({
 	thumbnail,
 	title,
 	authorName,
 	authorImage,
+	videoId,
+	createdAt,
 }) => {
 	return (
-		<div className='w-full max-w-xl'>
+		<Link href={`/watch/${videoId}`} className='w-full h-full mb-5'>
 			<Image
-				className={'rounded-md object-cover w-full aspect-video'}
+				className={'rounded object-cover w-full aspect-video'}
 				src={thumbnail}
 				alt={title}
 				width={1000}
@@ -29,30 +37,31 @@ const VideoCard: FC<VideoCardProps> = ({
 					className={'rounded-full'}
 					src={authorImage}
 					alt={authorName}
-					width={40}
-					height={40}
+					width={45}
+					height={45}
 				/>
-				<div className='w-full'>
+				<div className='w-fit'>
 					<h2
-						className={'text-sm max-w-[300px] font-normal truncate'}
+						className={'text-base max-w-[300px] font-semibold break-words'}
 						title={title}
 					>
 						{title}
 					</h2>
 					<div
 						className={
-							'text-base inline-flex gap-3 items-center font-light text-gray-400'
+							'text-base font-light flex  md:block gap-3 items-center text-gray-400'
 						}
 					>
-						{authorName}
-						<span>
-							<GoVerified />
-						</span>
+						<div className='md:flex gap-3 items-center'>
+							<p>{authorName}</p>
+							<p className={'text-xs'}>
+								17rb x ditonton - {getCreatedDate(createdAt)}
+							</p>
+						</div>
 					</div>
-					<p className={'text-xs pt-1'}>17rb x ditonton - 6 jam yang lalu</p>
 				</div>
 			</div>
-		</div>
+		</Link>
 	);
 };
 

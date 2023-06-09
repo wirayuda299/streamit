@@ -35,13 +35,21 @@ export const authOptions: NextAuthOptions = {
 		},
 
 		async signIn({ user }) {
+			const res = await fetch('http://localhost:3000/api/encrypt', {
+				method: 'POST',
+				body: JSON.stringify({
+					uid: user.id,
+				}),
+			});
+			const data = await res.json();
+
 			await setDoc(
 				doc(db, 'users', `${user?.id}`),
 				{
 					name: user.name,
 					email: user.email,
 					image: user.image,
-					uid: user.id,
+					uid: data.hash,
 					createdAt: Date.now(),
 				},
 				{
